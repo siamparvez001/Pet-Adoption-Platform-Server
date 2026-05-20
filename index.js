@@ -8,7 +8,7 @@ const port = process.env.PORT || 8000;
 
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = "mongodb+srv://pet_adoption:IdcNoZdHK8d6JtGk@cluster0.2evd3jf.mongodb.net/?appName=Cluster0";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -24,10 +24,22 @@ async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
+        // const db = client.db("pet_collection");
         const db = client.db("pet_adoption");
         // Send a ping to confirm a successful connection
         // await client.db("admin").command({ ping: 1 });
-
+        const petsCollection = db.collection("pet_collection");
+        app.get("/pets", async (req, res) => {
+            const cursor = petsCollection.find();
+            const result = await cursor.toArray();
+            res.send(result);
+        });
+        app.get("/pets/:petId", async (req, res) => {
+            const { petId } = req.params;
+            const query = { _id: new ObjectId(petId) }
+            const result = await petsCollection.findOne(query)
+            res.send(result);
+        })
 
 
 
