@@ -34,6 +34,13 @@ async function run() {
             const result = await cursor.toArray();
             res.send(result);
         });
+
+        app.get("/featured", async (req, res) => {
+            const cursor = petsCollection.find({ status: "available" }).limit(4);
+            const result = await cursor.toArray();
+            res.send(result);
+        });
+
         app.get("/pets/:petId", async (req, res) => {
             const { petId } = req.params;
             const query = { _id: new ObjectId(petId) }
