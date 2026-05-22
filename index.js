@@ -24,7 +24,8 @@ async function run() {
     try {
         await client.connect();
         const db = client.db("pet_adoption");
-        const petsCollection = db.collection("pet_collection");
+        const petsCollection = db.collection("pets");
+        // const petsCollection = db.collection("pet_collection");
         const adoptionRequestsCollection = db.collection("adoption_requests");
 
         // ── PETS ──────────────────────────────────────────
