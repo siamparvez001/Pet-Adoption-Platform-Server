@@ -10,7 +10,7 @@ app.use(express.json());
 const port = process.env.PORT || 8000;
 
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-const uri = "mongodb+srv://pet_adoption:IdcNoZdHK8d6JtGk@cluster0.2evd3jf.mongodb.net/?appName=Cluster0";
+const uri = process.env.MONGODB_URI;
 
 const client = new MongoClient(uri, {
     serverApi: {
